@@ -9,6 +9,8 @@ By default the application starts listening on port 9090, you can override any c
 The [dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol) is changing quite a lot. This project works with a specific version, so make sure after fetching the submodule
 you run `git checkout 841998ca027c0fd173cff1c752dfd46e5d14e557` from its folder.
 
+`gradle build` (skip tests using *-x test* if you want to build it quicker, tests run some benchmarks and can slow things) 
+
 
 ## Configuration
 
