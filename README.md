@@ -28,7 +28,7 @@ A sample application.yml should be enough to explain things:
  simulator:
 
    #default: 100
-   events-per-second: 100000
+   events-per-second: 1000
 
    #How many hosts you want simulate for each metric being generated. This will map to the Envelope index and ip (each resource gets an unique IP from the simulator)
    #Add as many resources as you would like to have as sources of metrics
