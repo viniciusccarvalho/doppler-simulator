@@ -2,7 +2,7 @@
 
 Simulates events emitted by [cloudfoundry doppler](http://www.github.com/loggregator).
 
-By default the application starts listening on port 9090, you can override any configuration using spring-boot configuration override: `--spring.config.file=file://`
+By default the application starts listening on port 9090, you can override any configuration using spring-boot configuration override: `--spring.config.location=file://`
 
 ## Building
 
