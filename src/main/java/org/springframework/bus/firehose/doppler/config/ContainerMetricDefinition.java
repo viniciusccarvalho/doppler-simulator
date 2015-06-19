@@ -25,16 +25,16 @@ package org.springframework.bus.firehose.doppler.config;
 public class ContainerMetricDefinition extends AbstractEvent {
 
 
-    private RangedMetricDefinition applicationId;
+    private StaticMetricDefinition applicationId;
     private RangedMetricDefinition cpuPercentage;
     private RangedMetricDefinition memoryBytes;
     private RangedMetricDefinition diskBytes;
 
-    public RangedMetricDefinition getApplicationId() {
+    public StaticMetricDefinition getApplicationId() {
         return applicationId;
     }
 
-    public void setApplicationId(RangedMetricDefinition applicationId) {
+    public void setApplicationId(StaticMetricDefinition applicationId) {
         this.applicationId = applicationId;
     }
 

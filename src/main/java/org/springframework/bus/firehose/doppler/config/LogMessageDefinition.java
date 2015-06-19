@@ -19,47 +19,42 @@
 
 package org.springframework.bus.firehose.doppler.config;
 
+import java.util.List;
+
 /**
  * @author Vinicius Carvalho
  */
-public class RangedMetricDefinition extends WeightedItem{
-
-    private Double min;
-    private Double max;
-
-    public RangedMetricDefinition(){}
-
-    public RangedMetricDefinition(String name, Double weight, Double min, Double max) {
-        super(name, weight);
-        this.min = min;
-        this.max = max;
+public class LogMessageDefinition extends AbstractEvent {
+    public String getMessage() {
+        return message;
     }
 
-    public String getUnit() {
-        return unit;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public List<String> getMessageType() {
+        return messageType;
     }
 
-    private String unit;
-
-    public Double getMin() {
-        return min;
+    public void setMessageType(List<String> messageType) {
+        this.messageType = messageType;
     }
 
-    public void setMin(Double min) {
-        this.min = min;
+    public StaticMetricDefinition getAppId() {
+        return appId;
     }
 
-    public Double getMax() {
-        return max;
+    public void setAppId(StaticMetricDefinition appId) {
+        this.appId = appId;
     }
 
-    public void setMax(Double max) {
-        this.max = max;
+    private String message;
+    private List<String> messageType;
+    private StaticMetricDefinition appId;
+
+    @Override
+    public String getType() {
+        return "LogMessage";
     }
-
-
 }

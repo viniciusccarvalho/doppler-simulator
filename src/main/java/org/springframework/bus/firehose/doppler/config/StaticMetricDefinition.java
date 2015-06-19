@@ -22,44 +22,20 @@ package org.springframework.bus.firehose.doppler.config;
 /**
  * @author Vinicius Carvalho
  */
-public class RangedMetricDefinition extends WeightedItem{
-
-    private Double min;
-    private Double max;
-
-    public RangedMetricDefinition(){}
-
-    public RangedMetricDefinition(String name, Double weight, Double min, Double max) {
+public class StaticMetricDefinition extends WeightedItem {
+    private Integer size;
+    public StaticMetricDefinition(){}
+    public StaticMetricDefinition(String name, Double weight, Integer size) {
         super(name, weight);
-        this.min = min;
-        this.max = max;
+        this.size = size;
     }
 
-    public String getUnit() {
-        return unit;
+    public Integer getSize() {
+
+        return size;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setSize(Integer size) {
+        this.size = size;
     }
-
-    private String unit;
-
-    public Double getMin() {
-        return min;
-    }
-
-    public void setMin(Double min) {
-        this.min = min;
-    }
-
-    public Double getMax() {
-        return max;
-    }
-
-    public void setMax(Double max) {
-        this.max = max;
-    }
-
-
 }

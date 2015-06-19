@@ -80,6 +80,12 @@ public class DopplerSimulator implements EventSimulator{
         if(config.getCounterEvent() != null){
             eventSimulators.add(config.getCounterEvent().getWeight(),new CounterEventSimulator(config.getCounterEvent(),resources));
         }
+        if(config.getContainerMetric() != null){
+            eventSimulators.add(config.getContainerMetric().getWeight(),new ContainerMetricSimulator(config.getContainerMetric(),resources));
+        }
+        if(config.getLogMessage() != null){
+            eventSimulators.add(config.getLogMessage().getWeight(),new LogMessageSimulator(config.getLogMessage(),resources));
+        }
     }
 
 

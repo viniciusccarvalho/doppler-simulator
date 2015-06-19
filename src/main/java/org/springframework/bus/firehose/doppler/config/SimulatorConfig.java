@@ -33,6 +33,8 @@ public class SimulatorConfig {
 
     private CounterEventDefinition counterEvent;
     private ValueMetricDefinition valueMetric;
+    private ContainerMetricDefinition containerMetric;
+    private LogMessageDefinition logMessage;
     private List<ResourceDefinition> resources;
     private Double eventsPerSecond = 100.0;
 
@@ -66,5 +68,21 @@ public class SimulatorConfig {
 
     public void setResources(List<ResourceDefinition> resources) {
         this.resources = resources;
+    }
+
+    public ContainerMetricDefinition getContainerMetric() {
+        return containerMetric;
+    }
+
+    public void setContainerMetric(ContainerMetricDefinition containerMetric) {
+        this.containerMetric = containerMetric;
+    }
+
+    public LogMessageDefinition getLogMessage() {
+        return logMessage;
+    }
+
+    public void setLogMessage(LogMessageDefinition logMessage) {
+        this.logMessage = logMessage;
     }
 }

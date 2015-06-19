@@ -109,5 +109,5 @@ the overhead is due the protocol buffer toByteArray() method.
 - [ ] HttpStart
 - [ ] HttpStop
 - [ ] HttpStartStop
-- [ ] ContainerMetric
-- [ ] LogMessage
+- [x] ContainerMetric
+- [x] LogMessage
