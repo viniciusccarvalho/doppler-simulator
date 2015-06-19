@@ -21,7 +21,6 @@ The server has a default `application.yml`, if you need to override with your ow
 A sample application.yml should be enough to explain things:
 
 ```yaml
-
  server:
     port: 9090
 
@@ -81,6 +80,28 @@ A sample application.yml should be enough to explain things:
    containerMetric:
     resources: ["dea"]
     weight: 2
+    applicationId:
+      size: 5
+    cpuPercentage:
+      min: 0
+      max: 100
+    memoryBytes:
+      min: 1048576
+      max: 4294967296
+    diskBytes:
+      min: 1048576
+      max: 4294967296
+
+
+   logMessage:
+    resources: ["router","dea"]
+    weight: 1
+    #static message to be set on each log
+    message: "2015-06-17 19:02:46.763  INFO 35181 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@73a1e9a9: startup date [Wed Jun 17 19:02:46 EDT 2015]; root of context hierarchy"
+    messageType: ["OUT","ERR"]
+    #UUID type, size means how many distinct values should be generated
+    appId:
+      size: 5
 
 ```
 
