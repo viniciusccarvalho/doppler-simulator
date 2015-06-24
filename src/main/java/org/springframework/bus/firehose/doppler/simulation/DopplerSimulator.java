@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Vinicius Carvalho
@@ -49,7 +50,7 @@ public class DopplerSimulator implements EventSimulator{
     }
 
 
-    public EventFactory.Envelope data(){
+    public Stream<EventFactory.Envelope> data(){
         return eventSimulators.next().data();
     }
 

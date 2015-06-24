@@ -54,11 +54,14 @@ public class MessageProducer implements Runnable {
     public void run() {
         while (running){
             limiter.acquire();
-            try {
-                session.sendMessage(new BinaryMessage(simulator.data().toByteArray()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+                simulator.data().forEach(envelope -> {
+                    try {
+                        session.sendMessage(new BinaryMessage(envelope.toByteArray()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
         }
     }
 }

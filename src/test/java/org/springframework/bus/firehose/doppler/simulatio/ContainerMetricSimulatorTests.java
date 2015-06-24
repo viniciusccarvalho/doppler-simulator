@@ -20,6 +20,8 @@
 package org.springframework.bus.firehose.doppler.simulatio;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.bus.firehose.doppler.config.ContainerMetricDefinition;
 import org.springframework.bus.firehose.doppler.config.RangedMetricDefinition;
 import org.springframework.bus.firehose.doppler.config.StaticMetricDefinition;
@@ -36,6 +38,8 @@ import java.util.Map;
  */
 public class ContainerMetricSimulatorTests {
 
+    private Logger logger = LoggerFactory.getLogger(ContainerMetricSimulator.class);
+
     @Test
     public void testRandomData(){
 
@@ -47,9 +51,31 @@ public class ContainerMetricSimulatorTests {
         definition.setWeight(1.0);
         definition.setResources(Collections.<String>singletonList("vm1"));
         ContainerMetricSimulator simulator = new ContainerMetricSimulator(definition,availableResources());
-        for(int i=0;i<100;i++){
-            System.out.println(simulator.data());
+        Long start = System.currentTimeMillis();
+        for(int i=0;i<1000;i++){
+            simulator.data().forEach(envelope -> {});
         }
+        Long end = System.currentTimeMillis();
+        logger.info("1000 events generated in {} ms",(end-start));
+    }
+
+    @Test
+    public void testRandomDataWithSerialization(){
+
+        ContainerMetricDefinition definition = new ContainerMetricDefinition();
+        definition.setCpuPercentage(new RangedMetricDefinition("", 1.0, 0.0, 100.0));
+        definition.setDiskBytes(new RangedMetricDefinition("", 1.0, 0.0, 100.0));
+        definition.setMemoryBytes(new RangedMetricDefinition("", 1.0, 0.0, 100.0));
+        definition.setApplicationId(new StaticMetricDefinition("",1.0,5));
+        definition.setWeight(1.0);
+        definition.setResources(Collections.<String>singletonList("vm1"));
+        ContainerMetricSimulator simulator = new ContainerMetricSimulator(definition,availableResources());
+        Long start = System.currentTimeMillis();
+        for(int i=0;i<1000;i++){
+            simulator.data().forEach(envelope -> {envelope.toByteArray();});
+        }
+        Long end = System.currentTimeMillis();
+        logger.info("1000 events generated with serialization in {} ms",(end-start));
     }
 
     protected Map<String,RandomCollection<Resource>> availableResources(){

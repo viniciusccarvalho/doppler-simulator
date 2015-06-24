@@ -25,7 +25,9 @@ import org.springframework.bus.firehose.doppler.config.CounterEventDefinition;
 import org.springframework.bus.firehose.doppler.config.RangedMetricDefinition;
 import org.springframework.bus.firehose.doppler.util.random.RandomCollection;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Vinicius Carvalho
@@ -42,7 +44,7 @@ public class CounterEventSimulator extends BaseSimulator {
     }
 
     @Override
-    public EventFactory.Envelope data() {
+    public Stream<EventFactory.Envelope> data() {
         Resource resource = internalResources.next().next();
         RangedMetric metric = metrics.next();
         EventFactory.Envelope envelope = EventFactory.Envelope.newBuilder()
@@ -57,7 +59,7 @@ public class CounterEventSimulator extends BaseSimulator {
                         .build())
                 .build();
 
-        return envelope;
+        return Collections.singletonList(envelope).stream();
     }
 
     private void configure(CounterEventDefinition definition) {

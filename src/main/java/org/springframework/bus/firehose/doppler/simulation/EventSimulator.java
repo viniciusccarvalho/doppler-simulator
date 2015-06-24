@@ -21,9 +21,11 @@ package org.springframework.bus.firehose.doppler.simulation;
 
 import org.cloudfoundry.dropsonde.events.EventFactory;
 
+import java.util.stream.Stream;
+
 /**
  * @author Vinicius Carvalho
  */
 public interface EventSimulator {
-    EventFactory.Envelope data();
+    Stream<EventFactory.Envelope> data();
 }

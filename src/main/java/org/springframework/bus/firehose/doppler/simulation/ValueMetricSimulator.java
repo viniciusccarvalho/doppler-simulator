@@ -25,7 +25,9 @@ import org.springframework.bus.firehose.doppler.config.RangedMetricDefinition;
 import org.springframework.bus.firehose.doppler.config.ValueMetricDefinition;
 import org.springframework.bus.firehose.doppler.util.random.RandomCollection;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Vinicius Carvalho
@@ -41,7 +43,7 @@ public class ValueMetricSimulator extends BaseSimulator {
     }
 
     @Override
-    public EventFactory.Envelope data() {
+    public Stream<EventFactory.Envelope> data() {
         Resource resource = internalResources.next().next();
         RangedMetric metric = metrics.next();
         EventFactory.Envelope envelope = EventFactory.Envelope.newBuilder()
@@ -59,7 +61,7 @@ public class ValueMetricSimulator extends BaseSimulator {
 
                                                     .build();
 
-        return envelope;
+        return Collections.singletonList(envelope).stream();
     }
 
     private void configure(ValueMetricDefinition config){

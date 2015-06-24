@@ -25,8 +25,10 @@ import org.cloudfoundry.dropsonde.events.LogFactory;
 import org.springframework.bus.firehose.doppler.config.LogMessageDefinition;
 import org.springframework.bus.firehose.doppler.util.random.RandomCollection;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 /**
  * @author Vinicius Carvalho
@@ -46,7 +48,7 @@ public class LogMessageSimulator extends BaseSimulator{
 
 
     @Override
-    public EventFactory.Envelope data() {
+    public Stream<EventFactory.Envelope> data() {
         Resource resource = internalResources.next().next();
         EventFactory.Envelope envelope = EventFactory.Envelope.newBuilder()
                 .setEventType(EventFactory.Envelope.EventType.LogMessage)
@@ -61,7 +63,7 @@ public class LogMessageSimulator extends BaseSimulator{
                         .setMessage(ByteString.copyFrom(messages.next().getBytes()))
                 .build())
                 .build();
-        return envelope;
+        return Collections.singletonList(envelope).stream();
     }
 
     private void configure(LogMessageDefinition definition) {
