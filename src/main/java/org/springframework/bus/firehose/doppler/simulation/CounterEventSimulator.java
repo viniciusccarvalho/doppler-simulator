@@ -62,6 +62,8 @@ public class CounterEventSimulator extends BaseSimulator {
         return Collections.singletonList(envelope).stream();
     }
 
+
+
     private void configure(CounterEventDefinition definition) {
         for (RangedMetricDefinition def : definition.getMetrics()) {
             metrics.add(definition.getWeight(), new RangedMetric(def));

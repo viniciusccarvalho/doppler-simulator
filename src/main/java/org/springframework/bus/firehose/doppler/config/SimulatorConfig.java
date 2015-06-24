@@ -35,6 +35,7 @@ public class SimulatorConfig {
     private ValueMetricDefinition valueMetric;
     private ContainerMetricDefinition containerMetric;
     private LogMessageDefinition logMessage;
+    private HttpStartStopDefinition httpStartStop;
     private List<ResourceDefinition> resources;
     private Double eventsPerSecond = 100.0;
 
@@ -84,5 +85,13 @@ public class SimulatorConfig {
 
     public void setLogMessage(LogMessageDefinition logMessage) {
         this.logMessage = logMessage;
+    }
+
+    public HttpStartStopDefinition getHttpStartStop() {
+        return httpStartStop;
+    }
+
+    public void setHttpStartStop(HttpStartStopDefinition httpStartStop) {
+        this.httpStartStop = httpStartStop;
     }
 }

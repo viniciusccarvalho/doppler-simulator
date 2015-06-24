@@ -4,7 +4,7 @@
  simulator:
 
    #default: 100
-   events-per-second: 1000
+   events-per-second: 100000000
 
    #How many hosts you want simulate for each metric being generated. This will map to the Envelope index and ip (each resource gets an unique IP from the simulator)
    #Add as many resources as you would like to have as sources of metrics
@@ -80,3 +80,42 @@
       size: 5
 
 
+   httpStartStop:
+     resources: ["router"]
+     weight: 5
+     applicationId:
+       size: 10
+     uri: ["/search","/create","/favicon"]
+     #optional, if not provided, only 200's will be generated
+     statusCode:
+       - name: 200
+         weight: 100
+       - name: 201
+         weight: 50
+       - name: 404
+         weight: 2
+       - name: 503
+         weight: 1
+     #optional, if not provided, all methods will be generated with equal weights
+     method:
+       - name: GET
+         weight: 100
+       - name: POST
+         weight: 50
+       - name: DELETE
+         weight: 10
+       - name: PUT
+         weight: 20
+     contentLenght:
+       min: 32
+       max: 1024
+     #optional, if not provided both types will be generated with equal weights
+     peerType:
+       - name: client
+         weight: 100
+       - name: server
+         weight: 10
+     #Response time in milliseconds to be set on HttpStop and HttpStartStop
+     responseTime:
+         min: 10
+         max: 5000

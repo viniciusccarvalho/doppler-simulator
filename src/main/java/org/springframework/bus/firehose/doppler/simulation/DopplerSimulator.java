@@ -87,6 +87,9 @@ public class DopplerSimulator implements EventSimulator{
         if(config.getLogMessage() != null){
             eventSimulators.add(config.getLogMessage().getWeight(),new LogMessageSimulator(config.getLogMessage(),resources));
         }
+        if(config.getHttpStartStop() != null){
+            eventSimulators.add(config.getHttpStartStop().getWeight(),new HttpStartStopSimulator(config.getHttpStartStop(),resources));
+        }
     }
 
 

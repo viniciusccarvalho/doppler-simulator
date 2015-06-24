@@ -17,8 +17,9 @@
  *
  */
 
-package org.springframework.bus.firehose.doppler.simulatio;
+package org.springframework.bus.firehose.doppler.simulation;
 
+import org.cloudfoundry.dropsonde.events.EventFactory;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,11 +72,13 @@ public class ContainerMetricSimulatorTests {
         definition.setResources(Collections.<String>singletonList("vm1"));
         ContainerMetricSimulator simulator = new ContainerMetricSimulator(definition,availableResources());
         Long start = System.currentTimeMillis();
+        Long totalBytes = 0L;
         for(int i=0;i<1000;i++){
-            simulator.data().forEach(envelope -> {envelope.toByteArray();});
+            totalBytes += simulator.data().mapToInt(envelope -> {return envelope.toByteArray().length;}).sum();
         }
         Long end = System.currentTimeMillis();
         logger.info("1000 events generated with serialization in {} ms",(end-start));
+        logger.info("Total bytes: " + totalBytes);
     }
 
     protected Map<String,RandomCollection<Resource>> availableResources(){

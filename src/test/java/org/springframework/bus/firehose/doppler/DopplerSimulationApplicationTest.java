@@ -32,6 +32,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Vinicius Carvalho
@@ -41,39 +42,46 @@ import java.util.concurrent.atomic.AtomicInteger;
 @WebIntegrationTest
 public class DopplerSimulationApplicationTest {
     AtomicInteger count = new AtomicInteger(0);
+    AtomicLong bytesRead = new AtomicLong(0);
     @Autowired
     private DopplerSimulator simulator;
 
     @Test
     public void simulatorLoad() throws Exception{
+        Long sleep = 5000L;
         new Thread(() -> {while (true){
-            simulator.data();
+            bytesRead.addAndGet(simulator.data().mapToInt(envelope -> {
+                return envelope.toByteArray().length;
+            }).sum());
             count.incrementAndGet();
         }}).start();
-        Thread.sleep(5000L);
-        System.out.println("Total Events: " + count);
+        Thread.sleep(sleep);
+        System.out.println(String.format("Test finished in %d ms. Events read: %d, bytes read: %d",sleep,count.get(),bytesRead.get()));
     }
 
     @Test
     public void websocketLoad() throws Exception{
         StandardWebSocketClient wsClient = new StandardWebSocketClient();
+        Long sleep = 5000L;
         MessageCounterHandler handler = new MessageCounterHandler();
         WebSocketSession session = wsClient.doHandshake(handler, "ws://localhost:9090/firehose/firehose-a").get();
-        Thread.sleep(5000L);
-        System.out.println("Total Events: " + handler.getCounter());
+        Thread.sleep(sleep);
+        System.out.println(String.format("Test finished in %d ms. Events read: %d, bytes read: %d",sleep,handler.getCounter().get(),handler.getBytesRead().get()    ));
     }
 
     class MessageCounterHandler extends BinaryWebSocketHandler {
-
+        private AtomicLong bytesRead = new AtomicLong(0L);
         private AtomicInteger counter = new AtomicInteger(0);
         @Override
         protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
             counter.incrementAndGet();
+            bytesRead.addAndGet(message.getPayload().array().length);
         }
 
         public AtomicInteger getCounter() {
             return counter;
         }
+        public AtomicLong getBytesRead() {return bytesRead;}
     }
 
 }
